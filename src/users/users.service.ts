@@ -1,8 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import * as admin from 'firebase-admin';
 import * as tf from '@tensorflow/tfjs-node';
 
 @Injectable()
 export class UsersService {
+  private firestore: admin.firestore.Firestore;
+
+  constructor(@Inject('FIREBASE_ADMIN') private firebaseAdmin: admin.app.App) {
+    this.firestore = firebaseAdmin.firestore();
+  }
+
   async postPredictImage(model: tf.GraphModel, image: Express.Multer.File) {
     try {
       const tensor = tf.node
@@ -62,9 +69,22 @@ export class UsersService {
     };
   }
 
-  getUserData(userId: string) {
+  async getUserData(userId: string) {
+    const snapshot = await this.firestore.collection('users').doc(userId).get();
+    const fetchedData = snapshot.data();
+
+    if (fetchedData) {
+      return {
+        Status: 'success',
+        message: 'Successfully GET ${user_id} data.',
+        data: fetchedData,
+      };
+    }
+
     return {
-      userId: userId,
+      status: 'fail',
+      message: 'Request gagal: User ID not found.',
+      data: {},
     };
   }
 
