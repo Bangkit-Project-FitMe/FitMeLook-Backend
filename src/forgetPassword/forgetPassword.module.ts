@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ForgetPasswordController } from './forgetpassword.controller';
+import { ForgetPasswordController } from './forgetPassword.controller';
 import { ForgetPasswordService } from './forgetPassword.service';
 
 @Module({

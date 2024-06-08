@@ -6,7 +6,7 @@ export class RegisterController {
   constructor(private readonly registerService: RegisterService) {}
 
   @Post()
-  postRegister(
+  async postRegister(
     @Body('email') userEmail: string,
     @Body('password') userPass: string,
   ) {

@@ -1,15 +1,18 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ForgetPasswordService } from './forgetPassword.service';
 
-@Controller('forget')
+@Controller('forget-password')
 export class ForgetPasswordController {
   constructor(private readonly forgetPasswordService: ForgetPasswordService) {}
 
   @Post()
-  postForgetPassword(
+  async postForgetPassword(
     @Body('email') userEmail: string,
-    @Body('password') userpass: string,
+    @Body('newPassword') userNewPassword: string,
   ) {
-    return this.forgetPasswordService.postForgetPassword(userEmail, userpass);
+    return this.forgetPasswordService.postForgetPassword(
+      userEmail,
+      userNewPassword,
+    );
   }
 }
