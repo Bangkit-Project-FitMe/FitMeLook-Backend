@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { FirestoreModule } from './firestore/firestore.module';
 import { ConfigModule } from '@nestjs/config';
-import { RegisterModule } from './register/register.module';  
+import { RegisterModule } from './register/register.module';
 import { LoginModule } from './login/login.module';
 import { ForgetPasswordModule } from './forgetPassword/forgetPassword.module';
 import { UsersModule } from './users/users.module';
+import { PredictionModule } from './prediction/prediction.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UsersModule } from './users/users.module';
     LoginModule,
     ForgetPasswordModule,
     UsersModule,
+    PredictionModule,
   ],
 })
 export class AppModule {}

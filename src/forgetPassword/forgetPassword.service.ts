@@ -7,11 +7,9 @@ export class ForgetPasswordService {
 
   async postForgetPassword(email: string, newPassword: string) {
     try {
-      // Get the user by email
       const user = await admin.auth().getUserByEmail(email);
       const uid = user.uid;
 
-      // Update the user's password
       await admin.auth().updateUser(uid, {
         password: newPassword,
       });
