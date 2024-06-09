@@ -35,7 +35,8 @@ export class RegisterService {
         profiles: {
           email,
           fullName: full_name,
-          created_at: new Date(),
+          // Use toISOString for Production Env
+          created_at: new Date().toISOString,
         },
         predictions: {},
       });
