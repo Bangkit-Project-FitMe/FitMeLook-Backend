@@ -50,7 +50,7 @@ export class UsersController {
     };
 
     // await this.firestoreService.uploadData('users', userId, data);
-    await this.firestoreService.savePredictionResult(userId, data);
+    await this.firestoreService.savePredictionResult(image, userId, data);
 
     const response = {
       status: 'success',

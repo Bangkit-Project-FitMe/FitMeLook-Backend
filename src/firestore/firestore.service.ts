@@ -1,12 +1,18 @@
 import { Injectable, Inject } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { v4 as uuidv4 } from 'uuid'; // For generating unique file names
 
 @Injectable()
 export class FirestoreService {
   private firestore: admin.firestore.Firestore;
+  private storage: any;
 
   constructor(@Inject('FIREBASE_ADMIN') private firebaseAdmin: admin.app.App) {
     this.firestore = firebaseAdmin.firestore();
+    this.storage = firebaseAdmin
+      .storage()
+      .bucket('gs://fitmelook-project.appspot.com');
+    console.log(typeof this.storage);
   }
 
   async uploadData(
@@ -18,7 +24,26 @@ export class FirestoreService {
     return docRef.set(data);
   }
 
-  async savePredictionResult(id: string, data: any) {
+  private async uploadFile(file: Express.Multer.File): Promise<string> {
+    const fileName = `${uuidv4()}${file.originalname}`;
+    const fileRef = this.storage.file(fileName);
+
+    await fileRef.save(file.buffer, {
+      metadata: {
+        contentType: file.mimetype,
+      },
+    });
+
+    return `https://storage.googleapis.com/${this.storage.name}/${fileName}`;
+  }
+
+  async savePredictionResult(file: Express.Multer.File, id: string, data: any) {
+    // Upload the file to Firebase Storage
+    const imageUrl = await this.uploadFile(file);
+
+    // Add the image URL to the prediction data
+    data.imageUrl = imageUrl;
+    console.log(imageUrl);
     try {
       // Reference to the user's Predictions subcollection
       const predictionsRef = this.firestore
