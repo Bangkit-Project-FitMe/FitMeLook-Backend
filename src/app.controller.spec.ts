@@ -15,8 +15,13 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return the welcome message', async () => {
+      const expectedResponse = {
+        status: 'success',
+        message:
+          'Welcome to the FitMeLook API. Please refer to the documentation for available endpoints.',
+      };
+      expect(await appController.getHome()).toEqual(expectedResponse);
     });
   });
 });

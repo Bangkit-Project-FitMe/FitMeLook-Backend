@@ -8,19 +8,20 @@ export class RegisterService {
   constructor(@Inject('FIREBASE_ADMIN') private firebaseAdmin: admin.app.App) {
     this.firestore = firebaseAdmin.firestore();
   }
-  
 
-  async userRegister(email: string, password: string) {
+  async userRegister(full_name: string, email: string, password: string) {
     try {
-      const snapshot = await this.firestore.collection('users')
-      .where('email', '==', email)
-      .get();
+      const snapshot = await this.firestore
+        .collection('users')
+        .where('email', '==', email)
+        .get();
 
       if (!snapshot.empty) {
-          return {
-            status: 'failed',
-            message: 'Email has been registered. please use another email.',
-          };
+        return {
+          status: 'failed',
+          message:
+            'Email has already been registered. Please choose a different email address to register.',
+        };
       }
 
       const userRecord = await admin.auth().createUser({
@@ -28,8 +29,16 @@ export class RegisterService {
         password,
       });
 
-      await this.firestore.collection('users').doc(userRecord.uid).set({
-       email, 
+      const userDocRef = this.firestore.collection('users').doc(userRecord.uid);
+
+      await userDocRef.set({
+        profiles: {
+          email,
+          fullName: full_name,
+          // Use toISOString for Production Env
+          created_at: new Date().toISOString,
+        },
+        predictions: {},
       });
 
       return {
@@ -42,7 +51,7 @@ export class RegisterService {
       console.log('Error creating new user:', error);
       return {
         status: 'failed',
-        message: 'Error creating new user.',
+        message: 'Error creating new user. Please try again later.',
         error: error.message,
       };
     }

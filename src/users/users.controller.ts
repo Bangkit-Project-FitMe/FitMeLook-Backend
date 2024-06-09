@@ -8,7 +8,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ModelService } from 'src/module/model.service';
+import { ModelService } from 'src/model/model.service';
 import { FirestoreService } from 'src/firestore/firestore.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 

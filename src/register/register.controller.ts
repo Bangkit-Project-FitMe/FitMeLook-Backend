@@ -7,9 +7,10 @@ export class RegisterController {
 
   @Post()
   async postRegister(
+    @Body('fullName') userFullName: string,
     @Body('email') userEmail: string,
     @Body('password') userPass: string,
   ) {
-    return this.registerService.userRegister(userEmail, userPass);
+    return this.registerService.userRegister(userFullName, userEmail, userPass);
   }
 }
