@@ -7,7 +7,12 @@ export class ModelService implements OnModuleInit {
 
   async onModuleInit() {
     console.log('Loading model...');
-    this.model = await tf.loadGraphModel(process.env.MODEL_URL);
+
+    const modelPath = process.env.MODEL_URL;
+    const handler = tf.io.fileSystem(modelPath);
+
+    this.model = await tf.loadGraphModel(handler);
+    // this.model = await tf.loadGraphModel(process.env.MODEL_URL);
     console.log('Model is successfully loaded');
   }
 
