@@ -36,22 +36,19 @@ export class UsersController {
     const {
       seasonalTypeConfidenceScore,
       seasonalType,
-      collarTypeConfidenceScore,
-      collarType,
+      faceShapeConfidenceScore,
+      faceShape,
     } = await this.usersService.postPredictImage(image);
 
     const data = {
-      clothing_colors: 'undefined',
-      clothing_types: 'undefined',
-      collar_type: collarType,
+      face_shape: faceShape,
       seasonal_type: seasonalType,
-      color_confidence_score: 'undefined',
-      cloth_confidence_score: 'undefined',
+      face_shape_confidence_score: faceShapeConfidenceScore,
       seasonal_type_confidence_score: seasonalTypeConfidenceScore,
-      collar_type_confidence_score: collarTypeConfidenceScore,
       created_at: new Date().toISOString(),
     };
 
+    // console.log(image.mimetype.split('/').pop());
     await this.firestoreService.savePredictionResult(image, userId, data);
 
     const response = {

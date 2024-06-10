@@ -15,22 +15,22 @@ export class UsersService {
 
   async postPredictImage(image: Express.Multer.File) {
     const seasonalModel = this.modelService.getSeasonalModel();
-    const collarModel = this.modelService.getCollarModel();
+    const faceShapeModel = this.modelService.getCollarModel();
 
-    if (!seasonalModel || !collarModel) {
+    if (!seasonalModel || !faceShapeModel) {
       throw new Error('Model is not loaded');
     }
 
     const { seasonalTypeConfidenceScore, seasonalType } =
       await this.modelService.predictSeasonalType(seasonalModel, image);
-    const { collarTypeConfidenceScore, collarType } =
-      await this.modelService.predictCollarType(collarModel, image);
+    const { faceShapeConfidenceScore, faceShape } =
+      await this.modelService.predictfaceShape(faceShapeModel, image);
 
     return {
       seasonalTypeConfidenceScore,
       seasonalType,
-      collarTypeConfidenceScore,
-      collarType,
+      faceShapeConfidenceScore,
+      faceShape,
     };
   }
 

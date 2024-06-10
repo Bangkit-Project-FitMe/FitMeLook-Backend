@@ -24,7 +24,7 @@ export class FirestoreService {
   }
 
   private async uploadFile(file: Express.Multer.File): Promise<string> {
-    const fileName = `${uuidv4()}${file.originalname}`;
+    const fileName = `${uuidv4()}.${file.mimetype.split('/').pop()}`;
     const fileRef = this.storage.file(fileName);
 
     await fileRef.save(file.buffer, {
