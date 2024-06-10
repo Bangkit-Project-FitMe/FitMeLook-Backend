@@ -33,26 +33,23 @@ export class UsersController {
         data: {},
       };
     }
-
-    const model = this.modelService.getModel();
-
-    if (!model) {
-      throw new Error('Model is not loaded');
-    }
-
-    const { seasonalTypeConfidenceScore, seasonalType } =
-      await this.usersService.postPredictImage(model, image);
-
-    const createdAt = new Date().toISOString();
+    const {
+      seasonalTypeConfidenceScore,
+      seasonalType,
+      collarTypeConfidenceScore,
+      collarType,
+    } = await this.usersService.postPredictImage(image);
 
     const data = {
       clothing_colors: 'undefined',
       clothing_types: 'undefined',
+      collar_type: collarType,
       seasonal_type: seasonalType,
       color_confidence_score: 'undefined',
       cloth_confidence_score: 'undefined',
-      Seasonal_type_confidence_score: seasonalTypeConfidenceScore,
-      created_at: createdAt,
+      seasonal_type_confidence_score: seasonalTypeConfidenceScore,
+      collar_type_confidence_score: collarTypeConfidenceScore,
+      created_at: new Date().toISOString(),
     };
 
     await this.firestoreService.savePredictionResult(image, userId, data);
