@@ -26,41 +26,39 @@ export class UsersController {
     @Param('id') userId: string,
     @UploadedFile() image: Express.Multer.File,
   ) {
-    const model = this.modelService.getModel();
-
-    if (!model) {
-      throw new Error('Model is not loaded');
+    if (!image.mimetype.match(/^image/)) {
+      return {
+        Status: 'fail',
+        message: `Input salah: ${image.mimetype}. Silakan gunakan foto lain.`,
+        data: {},
+      };
     }
-
-    const { seasonalTypeConfidenceScore, seasonalType } =
-      await this.usersService.postPredictImage(model, image);
-
-    // const id = crypto.randomUUID();
-    const createdAt = new Date().toISOString();
+    const {
+      seasonalTypeConfidenceScore,
+      seasonalType,
+      faceShapeConfidenceScore,
+      faceShape,
+    } = await this.usersService.postPredictImage(image);
 
     const data = {
-      // id: id,
-      clothing_colors: 'undefined',
-      clothing_types: 'undefined',
+      face_shape: faceShape,
       seasonal_type: seasonalType,
-      color_confidenceScore: 'undefined',
-      cloth_confidenceScore: 'undefined',
-      Seasonal_type_confidenceScore: seasonalTypeConfidenceScore,
-      createdAt: createdAt,
+      face_shape_confidence_score: faceShapeConfidenceScore,
+      seasonal_type_confidence_score: seasonalTypeConfidenceScore,
+      created_at: new Date().toISOString(),
     };
 
-    // await this.firestoreService.uploadData('users', userId, data);
+    // console.log(image.mimetype.split('/').pop());
     await this.firestoreService.savePredictionResult(image, userId, data);
 
     const response = {
       status: 'success',
       message:
-        seasonalTypeConfidenceScore > 99
+        seasonalTypeConfidenceScore > 50
           ? 'Model predicted successfully.'
           : 'Model predicted successfully but confidence is low. Please use a better image.',
       data,
     };
-    // console.log(data);
     return response;
   }
 

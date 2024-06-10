@@ -40,7 +40,6 @@ export class RegisterService {
           // Use toISOString for Production Env
           created_at: new Date().toISOString(),
         },
-        predictions: {},
       });
 
       return {
