@@ -26,6 +26,14 @@ export class UsersController {
     @Param('id') userId: string,
     @UploadedFile() image: Express.Multer.File,
   ) {
+    if (!image.mimetype.match(/^image/)) {
+      return {
+        Status: 'fail',
+        message: `Input salah: ${image.mimetype}. Silakan gunakan foto lain.`,
+        data: {},
+      };
+    }
+
     const model = this.modelService.getModel();
 
     if (!model) {
@@ -35,32 +43,28 @@ export class UsersController {
     const { seasonalTypeConfidenceScore, seasonalType } =
       await this.usersService.postPredictImage(model, image);
 
-    // const id = crypto.randomUUID();
     const createdAt = new Date().toISOString();
 
     const data = {
-      // id: id,
       clothing_colors: 'undefined',
       clothing_types: 'undefined',
       seasonal_type: seasonalType,
-      color_confidenceScore: 'undefined',
-      cloth_confidenceScore: 'undefined',
-      Seasonal_type_confidenceScore: seasonalTypeConfidenceScore,
-      createdAt: createdAt,
+      color_confidence_score: 'undefined',
+      cloth_confidence_score: 'undefined',
+      Seasonal_type_confidence_score: seasonalTypeConfidenceScore,
+      created_at: createdAt,
     };
 
-    // await this.firestoreService.uploadData('users', userId, data);
     await this.firestoreService.savePredictionResult(image, userId, data);
 
     const response = {
       status: 'success',
       message:
-        seasonalTypeConfidenceScore > 99
+        seasonalTypeConfidenceScore > 50
           ? 'Model predicted successfully.'
           : 'Model predicted successfully but confidence is low. Please use a better image.',
       data,
     };
-    // console.log(data);
     return response;
   }
 

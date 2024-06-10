@@ -52,15 +52,18 @@ export class UsersService {
 
     if (fetchedData) {
       return {
-        Status: 'success',
-        message: 'Successfully GET ${user_id} data.',
-        data: fetchedData,
+        status: 'success',
+        message: `Successfully GET ${userId} data.`,
+        data: {
+          user_id: userId,
+          ...fetchedData.profiles,
+        },
       };
     }
 
     return {
       status: 'fail',
-      message: 'Request gagal: User ID not found.',
+      message: 'Request failed: User ID not found.',
       data: {},
     };
   }
