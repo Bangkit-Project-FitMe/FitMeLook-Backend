@@ -9,6 +9,7 @@ export class RegisterService {
     this.firestore = firebaseAdmin.firestore();
   }
 
+  // ! Related to line 28
   async userRegister(full_name: string, email: string, password: string) {
     try {
       const snapshot = await this.firestore
@@ -24,6 +25,7 @@ export class RegisterService {
         };
       }
 
+      // ! Discuss with MD
       const userRecord = await admin.auth().createUser({
         email,
         password,
@@ -36,7 +38,7 @@ export class RegisterService {
           email,
           fullName: full_name,
           // Use toISOString for Production Env
-          created_at: new Date().toISOString,
+          created_at: new Date().toISOString(),
         },
         predictions: {},
       });
