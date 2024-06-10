@@ -9,50 +9,38 @@ export class RegisterService {
     this.firestore = firebaseAdmin.firestore();
   }
 
-  // ! Related to line 28
-  async userRegister(full_name: string, email: string, password: string) {
+  async userRegister(userID: string, email: string, fullName: string) {
     try {
-      const snapshot = await this.firestore
-        .collection('users')
-        .where('email', '==', email)
-        .get();
+      const userDocRef = this.firestore.collection('users').doc(userID);
+      const userDoc = await userDocRef.get();
 
-      if (!snapshot.empty) {
+      if (userDoc.exists) {
         return {
           status: 'failed',
           message:
-            'Email has already been registered. Please choose a different email address to register.',
+            'An account with this user ID already exists in the database',
         };
       }
-
-      // ! Discuss with MD
-      const userRecord = await admin.auth().createUser({
-        email,
-        password,
-      });
-
-      const userDocRef = this.firestore.collection('users').doc(userRecord.uid);
 
       await userDocRef.set({
         profiles: {
           email,
-          fullName: full_name,
-          // Use toISOString for Production Env
+          full_name: fullName,
           created_at: new Date().toISOString(),
         },
       });
 
       return {
         status: 'success',
-        message: 'Account created successfully.',
-        // Delete this when in production
-        uid: userRecord.uid,
+        message: 'Account successfully registered to the database.',
       };
     } catch (error) {
-      console.log('Error creating new user:', error);
+      // ! Delete in production, no console log cuz we dont need it
+      // console.log('Error creating new user:', error);
       return {
         status: 'failed',
-        message: 'Error creating new user. Please try again later.',
+        message:
+          'Error registering account to the database. Please try again later.',
         error: error.message,
       };
     }

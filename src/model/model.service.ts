@@ -9,6 +9,9 @@ export class ModelService implements OnModuleInit {
   async onModuleInit() {
     let modelPath;
     let handler;
+
+    // ! Console.log loading models needs to be streamlined, reduce usage of console.log
+    // ! When in production fix it first
     console.log('Loading models...');
 
     console.log('Loading model 1... (seasonal)');
@@ -19,7 +22,8 @@ export class ModelService implements OnModuleInit {
     console.log('Loading model 2... (face_shape)');
     modelPath = process.env.MODEL_URL_FACE;
     handler = tf.io.fileSystem(modelPath);
-    console.log('sampai sini');
+    // ! Delete in production
+    // console.log('sampai sini');
     this.faceShapeModel = await tf.loadLayersModel(handler);
 
     // this.model = await tf.loadGraphModel(process.env.MODEL_URL);
