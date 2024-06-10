@@ -12,7 +12,6 @@ export class FirestoreService {
     this.storage = firebaseAdmin
       .storage()
       .bucket('gs://fitmelook-project.appspot.com');
-    console.log(typeof this.storage);
   }
 
   async uploadData(
@@ -43,7 +42,7 @@ export class FirestoreService {
 
     // Add the image URL to the prediction data
     data.imageUrl = imageUrl;
-    console.log(imageUrl);
+    console.log(`image url: ${imageUrl}`);
     try {
       // Reference to the user's Predictions subcollection
       const predictionsRef = this.firestore
@@ -54,7 +53,7 @@ export class FirestoreService {
       // Add a new document to the Predictions subcollection
       const newPredictionRef = await predictionsRef.add(data);
 
-      console.log(`Prediction added with ID: ${newPredictionRef.id}`);
+      console.log(`Prediction added with ID: ${newPredictionRef.id}\n`);
       return newPredictionRef.id;
     } catch (error) {
       console.error('Error adding prediction:', error);
