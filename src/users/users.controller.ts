@@ -32,32 +32,35 @@ export class UsersController {
       throw new Error('Model is not loaded');
     }
 
-    const { confidenceScore, label, explanation, suggestion } =
+    const { seasonalTypeConfidenceScore, seasonalType } =
       await this.usersService.postPredictImage(model, image);
 
-    const id = crypto.randomUUID();
+    // const id = crypto.randomUUID();
     const createdAt = new Date().toISOString();
 
     const data = {
-      id: id,
-      result: label,
-      explanation: explanation,
-      suggestion: suggestion,
-      confidenceScore: confidenceScore,
+      // id: id,
+      clothing_colors: 'undefined',
+      clothing_types: 'undefined',
+      seasonal_type: seasonalType,
+      color_confidenceScore: 'undefined',
+      cloth_confidenceScore: 'undefined',
+      Seasonal_type_confidenceScore: seasonalTypeConfidenceScore,
       createdAt: createdAt,
     };
 
     // await this.firestoreService.uploadData('users', userId, data);
+    await this.firestoreService.savePredictionResult(image, userId, data);
 
     const response = {
       status: 'success',
       message:
-        confidenceScore > 99
+        seasonalTypeConfidenceScore > 99
           ? 'Model predicted successfully.'
           : 'Model predicted successfully but confidence is low. Please use a better image.',
       data,
     };
-    console.log(data);
+    // console.log(data);
     return response;
   }
 
