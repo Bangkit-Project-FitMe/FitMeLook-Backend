@@ -42,7 +42,9 @@ export class FirestoreService {
 
     // Add the image URL to the prediction data
     data.imageUrl = imageUrl;
-    console.log(`image url: ${imageUrl}`);
+
+    // ! Do we need it when in production? if no delete before production
+    // console.log(`image url: ${imageUrl}`);
     try {
       // Reference to the user's Predictions subcollection
       const predictionsRef = this.firestore
@@ -53,9 +55,13 @@ export class FirestoreService {
       // Add a new document to the Predictions subcollection
       const newPredictionRef = await predictionsRef.add(data);
 
+      // ! Delete in Production
+      // ! Or change it into formatted message with the newPredictionRef.id
       console.log(`Prediction added with ID: ${newPredictionRef.id}\n`);
       return newPredictionRef.id;
     } catch (error) {
+      // ! Delete in Production
+      // ! OR change it into formatted message for error (return json)
       console.error('Error adding prediction:', error);
     }
   }
