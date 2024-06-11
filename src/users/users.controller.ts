@@ -48,7 +48,6 @@ export class UsersController {
       created_at: new Date().toISOString(),
     };
 
-    // console.log(image.mimetype.split('/').pop());
     await this.firestoreService.savePredictionResult(image, userId, data);
 
     const response = {

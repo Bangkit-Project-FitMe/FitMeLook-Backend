@@ -2,6 +2,7 @@ import { Module, Global } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreService } from './firestore.service';
+import { FirestoreController } from './firestore.controller';
 
 @Global()
 @Module({
@@ -22,6 +23,7 @@ import { FirestoreService } from './firestore.service';
     },
     FirestoreService,
   ],
+  controllers: [FirestoreController],
   exports: ['FIREBASE_ADMIN', FirestoreService],
 })
 export class FirestoreModule {}
