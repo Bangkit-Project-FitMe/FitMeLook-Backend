@@ -10,6 +10,9 @@ export class ModelService implements OnModuleInit {
   async onModuleInit() {
     let modelPath;
     let handler;
+
+    // ! Console.log loading models needs to be streamlined, reduce usage of console.log
+    // ! When in production fix it first
     console.log('Loading models...');
 
     console.log('Loading model 1... (seasonal)');

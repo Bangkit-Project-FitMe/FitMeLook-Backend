@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { PredictionService } from './prediction.service';
+import { PredictionService } from './predictions.service';
 
 @Controller('users/:userID/predictions')
 export class PredictionController {
