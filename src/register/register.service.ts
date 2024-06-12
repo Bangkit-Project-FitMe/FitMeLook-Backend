@@ -35,8 +35,6 @@ export class RegisterService {
         message: 'Account successfully registered to the database.',
       };
     } catch (error) {
-      // ! Delete in production, no console log cuz we dont need it
-      // console.log('Error creating new user:', error);
       return {
         status: 'failed',
         message:

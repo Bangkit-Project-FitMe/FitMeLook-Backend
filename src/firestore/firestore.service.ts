@@ -5,27 +5,36 @@ import { v4 as uuidv4 } from 'uuid'; // For generating unique file names
 @Injectable()
 export class FirestoreService {
   private firestore: admin.firestore.Firestore;
-  private storage: any;
+  private storagePostPredict: any;
+  private storageResponseImages: any;
 
   constructor(@Inject('FIREBASE_ADMIN') private firebaseAdmin: admin.app.App) {
     this.firestore = firebaseAdmin.firestore();
-    this.storage = firebaseAdmin
+    this.storagePostPredict = firebaseAdmin
       .storage()
       .bucket('gs://fitmelook-project.appspot.com');
+    this.storageResponseImages = firebaseAdmin
+      .storage()
+      .bucket('gs://fitmelook-response-images');
   }
 
-  async uploadData(
-    collection: string,
-    id: string,
-    data: any,
-  ): Promise<admin.firestore.WriteResult> {
-    const docRef = this.firestore.collection(collection).doc(id);
-    return docRef.set(data);
+  async listBucketFiles() {
+    const list = await this.storageResponseImages.getFiles();
+    // Extract the array of File objects (which is the first element of the main array)
+    const fileObjects = list[0];
+
+    // Use map to extract the id properties
+    const ids = fileObjects.map(
+      (file) =>
+        `https://storage.cloud.google.com/fitmelook-response-images/${file.id}`,
+    );
+
+    return ids;
   }
 
   private async uploadFile(file: Express.Multer.File): Promise<string> {
     const fileName = `${uuidv4()}.${file.mimetype.split('/').pop()}`;
-    const fileRef = this.storage.file(fileName);
+    const fileRef = this.storagePostPredict.file(fileName);
 
     await fileRef.save(file.buffer, {
       metadata: {
@@ -33,7 +42,7 @@ export class FirestoreService {
       },
     });
 
-    return `https://storage.googleapis.com/${this.storage.name}/${fileName}`;
+    return `https://storage.googleapis.com/${this.storagePostPredict.name}/${fileName}`;
   }
 
   async savePredictionResult(file: Express.Multer.File, id: string, data: any) {
@@ -41,10 +50,7 @@ export class FirestoreService {
     const imageUrl = await this.uploadFile(file);
 
     // Add the image URL to the prediction data
-    data.imageUrl = imageUrl;
-
-    // ! Do we need it when in production? if no delete before production
-    // console.log(`image url: ${imageUrl}`);
+    data.image_url = imageUrl;
     try {
       // Reference to the user's Predictions subcollection
       const predictionsRef = this.firestore
@@ -55,19 +61,9 @@ export class FirestoreService {
       // Add a new document to the Predictions subcollection
       const newPredictionRef = await predictionsRef.add(data);
 
-      // ! Delete in Production
-      // ! Or change it into formatted message with the newPredictionRef.id
-      console.log(`Prediction added with ID: ${newPredictionRef.id}\n`);
       return newPredictionRef.id;
     } catch (error) {
-      // ! Delete in Production
-      // ! OR change it into formatted message for error (return json)
-      console.error('Error adding prediction:', error);
+      return error;
     }
-  }
-
-  async fetchData(collection: string): Promise<any[]> {
-    const snapshot = await this.firestore.collection(collection).get();
-    return snapshot.docs.map((doc) => doc.data());
   }
 }
