@@ -33,20 +33,6 @@ export class UsersService {
       faceShape,
     };
   }
-  // ! Does it still in use? if not delete in production
-  getHistories(userId: string) {
-    return {
-      userId: userId,
-    };
-  }
-
-  // ! This too delete if not used
-  getSpecificHistories(userId: string, predictionId: string) {
-    return {
-      userId: userId,
-      predictionId: predictionId,
-    };
-  }
 
   async getUserData(userId: string) {
     const snapshot = await this.firestore.collection('users').doc(userId).get();

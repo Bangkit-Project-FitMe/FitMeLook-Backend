@@ -40,12 +40,15 @@ export class UsersController {
       faceShape,
     } = await this.usersService.postPredictImage(image);
 
+    const responseImages = await this.firestoreService.listBucketFiles();
+
     const data = {
       face_shape: faceShape,
       seasonal_type: seasonalType,
       face_shape_confidence_score: faceShapeConfidenceScore,
       seasonal_type_confidence_score: seasonalTypeConfidenceScore,
       created_at: new Date().toISOString(),
+      response_images: responseImages,
     };
 
     await this.firestoreService.savePredictionResult(image, userId, data);
@@ -59,19 +62,6 @@ export class UsersController {
       data,
     };
     return response;
-  }
-
-  @Get(':id/histories')
-  getHistories(@Param('id') userId: string) {
-    return this.usersService.getHistories(userId);
-  }
-
-  @Get(':id/histories/:predictionId')
-  getSpecificHistories(
-    @Param('id') userId: string,
-    @Param('predictionId') predictionId: string,
-  ) {
-    return this.usersService.getSpecificHistories(userId, predictionId);
   }
 
   @Get(':id')
