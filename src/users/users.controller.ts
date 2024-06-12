@@ -28,8 +28,8 @@ export class UsersController {
   ) {
     if (!image.mimetype.match(/^image/)) {
       return {
-        Status: 'fail',
-        message: `Input salah: ${image.mimetype}. Silakan gunakan foto lain.`,
+        status: 'fail',
+        message: `Wrong input: ${image.mimetype}. Please use another image.`,
         data: {},
       };
     }

@@ -26,7 +26,7 @@ export class PredictionService {
         };
       }
       const predictions = snapshot.docs.map((doc) => ({
-        id: doc.id,
+        prediction_id: doc.id,
         ...doc.data(),
       }));
 
@@ -65,7 +65,7 @@ export class PredictionService {
         status: 'success',
         message: 'Prediction details retrieved successfully.',
         data: {
-          predictionID: doc.id,
+          prediction_id: doc.id,
           ...doc.data(),
         },
       };

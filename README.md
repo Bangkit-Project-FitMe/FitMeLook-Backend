@@ -1,71 +1,75 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="FitMeLook Logo" /></a>
-</p>
+# Backend FitMeLook
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
+This backend project is built with cutting-edge technologies to provide seamless and efficient services. This project leverages the power of NestJS, Node.js, Firebase and Cloud Firestore to create a robust and scalable backend solution for FitMeLook product app.
 
-## Description
+## Technology Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **NestJS (Express)**: A progressive Node.js framework for building efficient and scalable server-side applications.
+- **Javascript (Node.js) & Typescript**: The core programming languages used for building the application.
+- **Firebase & Cloud Firestore**: For data storage and real-time database functionalities.
 
-## Installation
+## Installed Packages
 
-```bash
-$ npm install
-```
+- `@nestjs/common`
+- `@nestjs/config`
+- `@nestjs/core`
+- `@nestjs/platform-express`
+- `@tensorflow/tfjs-node`
+- `firebase-admin`
+- `reflect-metadata`
+- `rxjs`
 
-## Running the app
+## Prerequisites
 
-```bash
-# development
-$ npm run start
+Before running the project, ensure you have the following:
 
-# watch mode
-$ npm run start:dev
+1. **Seasonal Model**: A machine learning model for seasonal analysis.
+2. **Face Shape Model**: A machine learning model for face shape analysis.
+3. **MTCNN Model**: A machine learning model for Multi-task Cascaded Convolutional Networks.
+4. **Google Cloud Service Account Key**: Required for Firebase and Cloud Firestore integration.
 
-# production mode
-$ npm run start:prod
-```
 
-## Test
+<hr>
+
+## Setup Instructions
+
+### Step 1: Clone the Repository
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/Bangkit-Project-FitMe/backend-cc.git
 ```
 
-## Support
+### Step 2: Navigate to the Project Directory
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+cd backend-cc
+```
 
-## Stay in touch
+### Step 3: Install Dependencies
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npm install
+```
 
-## License
+### Step 4: Configure Environment Variable
 
-Nest is [MIT licensed](LICENSE).
+```bash
+cat > .env << EOF
+FIREBASE_SERVICE_ACCOUNT_PATH=<YOUR_FIREBASE_SERVICE_ACCOUNT_PATH>
+MODEL_URL_SEASONAL=<YOUR_MODEL_URL>
+MODEL_URL_FACE=<YOUR_MODEL_URL>
+MODEL_URL_MTCNN=<YOUR_MODEL_URL>
+EOF
+```
+
+### Step 5: Run this project
+
+```bash
+npm run start
+```
+
+## [API Documentation]
+
+For detailed API Documentation, please visit the [API_Documentation](API_Documentation) file.

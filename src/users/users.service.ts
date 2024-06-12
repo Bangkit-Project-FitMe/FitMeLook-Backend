@@ -58,7 +58,7 @@ export class UsersService {
 
   patchUserData(userId: string) {
     return {
-      userId: userId,
+      user_id: userId,
     };
   }
 }

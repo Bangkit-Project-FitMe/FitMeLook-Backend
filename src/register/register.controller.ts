@@ -7,7 +7,7 @@ export class RegisterController {
 
   @Post()
   async postRegister(
-    @Body('userID') userID: string,
+    @Body('user_id') userID: string,
     @Body('email') userEmail: string,
     @Body('full_name') userFullName: string,
   ) {
