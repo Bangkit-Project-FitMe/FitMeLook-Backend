@@ -11,21 +11,14 @@ export class ModelService implements OnModuleInit {
     let modelPath;
     let handler;
 
-    // ! Console.log loading models needs to be streamlined, reduce usage of console.log
-    // ! When in production fix it first
-    console.log('Loading models...');
-
-    console.log('Loading model 1... (seasonal)');
     modelPath = process.env.MODEL_URL_SEASONAL;
     handler = tf.io.fileSystem(modelPath);
     this.seasonalTypeModel = await tf.loadGraphModel(handler);
 
-    console.log('Loading model 2... (face_shape)');
     modelPath = process.env.MODEL_URL_FACE;
     handler = tf.io.fileSystem(modelPath);
     this.faceShapeModel = await tf.loadLayersModel(handler);
 
-    // console.log('Loading model 3... (MTCNN)');
     // modelPath = process.env.MODEL_URL_MTCNN;
     // handler = tf.io.fileSystem(modelPath);
     // this.MtcnnModel = await tf.loadLayersModel(handler);
@@ -34,7 +27,6 @@ export class ModelService implements OnModuleInit {
     // this.seasonalTypeModel = await tf.loadGraphModel(process.env.MODEL_URL_SEASONAL);
     // this.faceShapeModel = await tf.loadGraphModel(process.env.MODEL_URL_FACE);
     // this.Mtcnn = await tf.loadGraphModel(process.env.MODEL_URL_MTCNN);
-    console.log('Model is successfully loaded');
   }
 
   getSeasonalModel(): tf.GraphModel {

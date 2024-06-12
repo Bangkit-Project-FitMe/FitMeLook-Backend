@@ -23,6 +23,7 @@ import { FirestoreController } from './firestore.controller';
     },
     FirestoreService,
   ],
+  // ! delete if in production
   controllers: [FirestoreController],
   exports: ['FIREBASE_ADMIN', FirestoreService],
 })
