@@ -18,15 +18,14 @@ export class FirestoreService {
       .bucket('gs://fitmelook-response-images');
   }
 
-  async listBucketFiles() {
-    const list = await this.storageResponseImages.getFiles();
-    // Extract the array of File objects (which is the first element of the main array)
-    const fileObjects = list[0];
+  async listBucketFiles(seasonal_type: string, face_shape: string) {
+    const path = `${seasonal_type}/${face_shape}`;
 
-    // Use map to extract the id properties
-    const ids = fileObjects.map(
+    const [files] = await this.storageResponseImages.getFiles({ prefix: path });
+
+    const ids = files.map(
       (file) =>
-        `https://storage.cloud.google.com/fitmelook-response-images/${file.id}`,
+        `https://storage.cloud.google.com/fitmelook-response-images/${file.name}`,
     );
 
     return ids;
