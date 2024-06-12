@@ -2,7 +2,6 @@ import { Module, Global } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FirestoreService } from './firestore.service';
-import { FirestoreController } from './firestore.controller';
 
 @Global()
 @Module({
@@ -23,8 +22,6 @@ import { FirestoreController } from './firestore.controller';
     },
     FirestoreService,
   ],
-  // ! delete if in production
-  controllers: [FirestoreController],
   exports: ['FIREBASE_ADMIN', FirestoreService],
 })
 export class FirestoreModule {}
