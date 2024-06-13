@@ -40,7 +40,10 @@ export class UsersController {
       faceShape,
     } = await this.usersService.postPredictImage(image);
 
-    const responseImages = await this.firestoreService.listBucketFiles();
+    const responseImages = await this.firestoreService.listBucketFiles(
+      seasonalType,
+      faceShape,
+    );
 
     const data = {
       face_shape: faceShape,
