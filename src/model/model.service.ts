@@ -11,21 +11,21 @@ export class ModelService implements OnModuleInit {
     let modelPath;
     let handler;
 
-    modelPath = process.env.MODEL_URL_SEASONAL;
-    handler = tf.io.fileSystem(modelPath);
-    this.seasonalTypeModel = await tf.loadGraphModel(handler);
+    // modelPath = process.env.MODEL_URL_SEASONAL;
+    // handler = tf.io.fileSystem(modelPath);
+    // this.seasonalTypeModel = await tf.loadGraphModel(handler);
 
-    modelPath = process.env.MODEL_URL_FACE;
-    handler = tf.io.fileSystem(modelPath);
-    this.faceShapeModel = await tf.loadLayersModel(handler);
+    // modelPath = process.env.MODEL_URL_FACE;
+    // handler = tf.io.fileSystem(modelPath);
+    // this.faceShapeModel = await tf.loadLayersModel(handler);
 
     // modelPath = process.env.MODEL_URL_MTCNN;
     // handler = tf.io.fileSystem(modelPath);
     // this.MtcnnModel = await tf.loadLayersModel(handler);
 
     // ! uncomment line below when loading the model by url
-    // this.seasonalTypeModel = await tf.loadGraphModel(process.env.MODEL_URL_SEASONAL);
-    // this.faceShapeModel = await tf.loadGraphModel(process.env.MODEL_URL_FACE);
+    this.seasonalTypeModel = await tf.loadGraphModel(process.env.MODEL_URL_SEASONAL);
+    this.faceShapeModel = await tf.loadLayersModel(process.env.MODEL_URL_FACE);
     // this.Mtcnn = await tf.loadGraphModel(process.env.MODEL_URL_MTCNN);
   }
 
