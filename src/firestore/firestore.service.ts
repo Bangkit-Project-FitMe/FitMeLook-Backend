@@ -60,7 +60,10 @@ export class FirestoreService {
       // Add a new document to the Predictions subcollection
       const newPredictionRef = await predictionsRef.add(data);
 
-      return newPredictionRef.id;
+      return {
+        status: 'success',
+        message: 'Prediction successfully added to the database.',
+      };
     } catch (error) {
       return error;
     }

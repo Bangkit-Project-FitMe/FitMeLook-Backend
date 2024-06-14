@@ -9,7 +9,7 @@ export class ForgetPasswordController {
   @Post()
   async postForgetPassword(
     @Body('email') userEmail: string,
-    @Body('newPassword') userNewPassword: string,
+    @Body('new_password') userNewPassword: string,
   ) {
     return this.forgetPasswordService.postForgetPassword(
       userEmail,
