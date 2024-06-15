@@ -25,7 +25,7 @@ export class FirestoreService {
 
     const ids = files.map(
       (file) =>
-        `https://storage.cloud.google.com/fitmelook-response-images/${file.name}`,
+        `https://storage.googleapis.com/fitmelook-response-images/${file.name}`,
     );
 
     return ids;
