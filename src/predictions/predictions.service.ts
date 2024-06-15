@@ -18,6 +18,7 @@ export class PredictionService {
         .doc(userID)
         .collection('predictions')
         .get();
+
       if (snapshot.empty) {
         return {
           status: 'fail',
@@ -25,10 +26,40 @@ export class PredictionService {
           data: {},
         };
       }
-      const predictions = snapshot.docs.map((doc) => ({
-        prediction_id: doc.id,
-        ...doc.data(),
-      }));
+
+      // ! OLD CODES
+      // const predictions = snapshot.docs.map((doc) => ({
+      //   prediction_id: doc.id,
+      //   ...doc.data(),
+      // }));
+
+      // const predictions = snapshot.docs.map((doc) => {
+      //   const data = doc.data();
+      //   return {
+      //     prediction_id: doc.id,
+      //     created_at: data.created_at, // Include created_at explicitly
+      //     ...data,
+      //   };
+      // });
+
+      const predictions = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          prediction_id: doc.id,
+          created_at: new Date(data.created_at),
+          ...data,
+        };
+      });
+
+      predictions.sort((a, b) => {
+        if (a.created_at < b.created_at) {
+          return 1;
+        }
+        if (a.created_at > b.created_at) {
+          return -1;
+        }
+        return 0;
+      });
 
       return {
         status: 'success',
