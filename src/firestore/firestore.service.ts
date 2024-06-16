@@ -58,7 +58,7 @@ export class FirestoreService {
         .collection('predictions');
 
       // Add a new document to the Predictions subcollection
-      const newPredictionRef = await predictionsRef.add(data);
+      await predictionsRef.add(data);
 
       return {
         status: 'success',

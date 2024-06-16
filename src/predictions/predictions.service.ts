@@ -27,21 +27,6 @@ export class PredictionService {
         };
       }
 
-      // ! OLD CODES
-      // const predictions = snapshot.docs.map((doc) => ({
-      //   prediction_id: doc.id,
-      //   ...doc.data(),
-      // }));
-
-      // const predictions = snapshot.docs.map((doc) => {
-      //   const data = doc.data();
-      //   return {
-      //     prediction_id: doc.id,
-      //     created_at: data.created_at, // Include created_at explicitly
-      //     ...data,
-      //   };
-      // });
-
       const predictions = snapshot.docs.map((doc) => {
         const data = doc.data();
         return {

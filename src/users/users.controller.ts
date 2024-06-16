@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Get,
   Param,
@@ -27,11 +28,9 @@ export class UsersController {
     @UploadedFile() image: Express.Multer.File,
   ) {
     if (!image.mimetype.match(/^image/)) {
-      return {
-        status: 'fail',
-        message: `Wrong input: ${image.mimetype}. Please use another image.`,
-        data: {},
-      };
+      throw new BadRequestException(
+        `Wrong input: ${image.mimetype}. Please use another image.`,
+      );
     }
     const {
       seasonalTypeConfidenceScore,
@@ -39,6 +38,21 @@ export class UsersController {
       faceShapeConfidenceScore,
       faceShape,
     } = await this.usersService.postPredictImage(image);
+
+    // confidence level of seasonal type
+    const cf1IsLow = seasonalTypeConfidenceScore < 70;
+    // confidence level of face shape
+    const cf2IsLow = seasonalTypeConfidenceScore < 70;
+    if (
+      cf1IsLow ||
+      cf2IsLow ||
+      seasonalType === undefined ||
+      faceShape === undefined
+    ) {
+      throw new BadRequestException(
+        'Model has low confidence, please use another image.',
+      );
+    }
 
     const responseImages = await this.firestoreService.listBucketFiles(
       seasonalType,
@@ -58,10 +72,7 @@ export class UsersController {
 
     const response = {
       status: 'success',
-      message:
-        seasonalTypeConfidenceScore > 50
-          ? 'Model predicted successfully.'
-          : 'Model predicted successfully but confidence is low. Please use a better image.',
+      message: 'Model predicted successfully',
       data,
     };
     return response;
