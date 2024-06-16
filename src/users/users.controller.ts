@@ -43,7 +43,12 @@ export class UsersController {
     const cf1IsLow = seasonalTypeConfidenceScore < 70;
     // confidence level of face shape
     const cf2IsLow = seasonalTypeConfidenceScore < 70;
-    if (cf1IsLow || cf2IsLow) {
+    if (
+      cf1IsLow ||
+      cf2IsLow ||
+      seasonalType === undefined ||
+      faceShape === undefined
+    ) {
       throw new BadRequestException(
         'Model has low confidence, please use another image.',
       );
