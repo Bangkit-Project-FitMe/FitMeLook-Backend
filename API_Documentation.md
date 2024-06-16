@@ -6,7 +6,7 @@
 
 #### Response:
 
-```json
+```js
 {
 Status: success,
 message: Successfully GET ${user_id} data.,
@@ -22,7 +22,7 @@ data: {
 
 ### List user all predictions data [GET]
 
-```json
+```js
 {
     status: success,
     message: User predictions retrieved successfully.,
@@ -55,7 +55,7 @@ data: {
 
 ### List user prediction data by prediction_id [GET]
 
-```json
+```js
 {
     status: success,
     message: Prediction details retrieved successfully.,
@@ -78,11 +78,11 @@ data: {
 
 #### Input:
 
-```json
+```js
 //  berupa gambar dengan key `image`
 {
   fieldname: 'image',
-  originalname: <image_name>.jpg',
+  originalname:'<image_name>.jpg',
   encoding: '7bit',
   mimetype: 'image/jpeg',
   buffer: <Buffer ff d8 ff db 00 43 00 ... 185681 more bytes>,
@@ -92,7 +92,7 @@ data: {
 
 #### Response:
 
-```json
+```js
 {
     status: success,
     message: Prediction details retrieved successfully..,
@@ -115,7 +115,7 @@ data: {
 
 #### Input:
 
-```json
+```js
 {
   full_name: string,
   email: string,
@@ -125,7 +125,7 @@ data: {
 
 #### Response:
 
-```json
+```js
 {
     status: string,
     message: string,
