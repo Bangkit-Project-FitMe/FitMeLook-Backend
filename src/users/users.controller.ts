@@ -3,13 +3,11 @@ import {
   Controller,
   Get,
   Param,
-  Patch,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ModelService } from 'src/model/model.service';
 import { FirestoreService } from 'src/firestore/firestore.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -17,7 +15,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly modelService: ModelService,
     private readonly firestoreService: FirestoreService,
   ) {}
 
@@ -81,10 +78,5 @@ export class UsersController {
   @Get(':id')
   getUserData(@Param('id') userId: string) {
     return this.usersService.getUserData(userId);
-  }
-
-  @Patch(':id')
-  patchUserData(@Param('id') userId: string) {
-    return this.usersService.patchUserData(userId);
   }
 }
