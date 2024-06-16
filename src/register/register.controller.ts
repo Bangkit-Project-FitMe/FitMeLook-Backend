@@ -6,10 +6,11 @@ export class RegisterController {
   constructor(private readonly registerService: RegisterService) {}
 
   @Post()
-  postRegister(
+  async postRegister(
+    @Body('user_id') userID: string,
     @Body('email') userEmail: string,
-    @Body('password') userPass: string,
+    @Body('full_name') userFullName: string,
   ) {
-    return this.registerService.userRegister(userEmail, userPass);
+    return this.registerService.userRegister(userID, userEmail, userFullName);
   }
 }
