@@ -44,7 +44,7 @@ git clone https://github.com/Bangkit-Project-FitMe/backend-cc.git
 ### Step 2: Navigate to the Project Directory
 
 ```bash
-cd backend-cc
+cd FitMeLook-Backend
 ```
 
 ### Step 3: Install Dependencies
@@ -70,6 +70,6 @@ EOF
 npm run start
 ```
 
-## [API Documentation]
+## API Documentation
 
 For detailed API Documentation, please visit the [API_Documentation](API_Documentation.md) file.
