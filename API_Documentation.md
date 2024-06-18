@@ -8,8 +8,8 @@
 
 ```js
 {
-Status: success,
-message: Successfully GET ${user_id} data.,
+Status: 'success',
+message: `Successfully GET ${user_id} data.`,
 data: {
 	user_id: string,
 	email: string,
@@ -24,15 +24,15 @@ data: {
 
 ```js
 {
-    status: success,
-    message: User predictions retrieved successfully.,
+    status: 'success',
+    message: 'User predictions retrieved successfully.',
     data: [
         {
             prediction_id: string,
             face_shape: string,
             seasonal_type: string,
             face_shape_confidence_score: number,
-            seasonal_type_confidence_score: number
+            seasonal_type_confidence_score: number,
             image_url: string,
             created_at: date,
             response_images: string[],
@@ -42,7 +42,7 @@ data: {
             face_shape: string,
             seasonal_type: string,
             face_shape_confidence_score: number,
-            seasonal_type_confidence_score: number
+            seasonal_type_confidence_score: number,
             image_url: string,
             created_at: date,
             response_images: string[],
@@ -57,8 +57,8 @@ data: {
 
 ```js
 {
-    status: success,
-    message: Prediction details retrieved successfully.,
+    status: 'success',
+    message: 'Prediction details retrieved successfully.',
     data: {
         prediction_id: string,
         face_shape: string,
@@ -86,7 +86,7 @@ data: {
   encoding: '7bit',
   mimetype: 'image/jpeg',
   buffer: <Buffer ff d8 ff db 00 43 00 ... 185681 more bytes>,
-  size: 185731
+  size: number,
 }
 ```
 
@@ -94,14 +94,14 @@ data: {
 
 ```js
 {
-    status: success,
-    message: Prediction details retrieved successfully..,
+    status: 'success',
+    message: 'Prediction details retrieved successfully..',
     data: {
         prediction_id: string,
         face_shape: string,
         seasonal_type: string,
         face_shape_confidence_score: number,
-        seasonal_type_confidence_score: number
+        seasonal_type_confidence_score: number,
         image_url: string,
         created_at: date,
         response_images: string[],
@@ -127,7 +127,7 @@ data: {
 
 ```js
 {
-    status: string,
-    message: string,
+    status: 'success',
+    message: 'Account successfully registered to the database.',
 }
 ```
